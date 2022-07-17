@@ -5,6 +5,6 @@ module.exports = (ap)=>{
 
     ap.post('/amazon/v1/products/create',[mid.token,mid.admin],controller.create);
 
-    //ap.post('/amazon/v1/users/signin',controller.signIn);
+    ap.post('/amazon/v1/products/update/:id',[mid.token,mid.admin],controller.updatePro);
 
 }

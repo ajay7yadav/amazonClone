@@ -18,7 +18,7 @@ exports.create = async(req, res)=>{
         });
     }
 }
-exports.updatePro = (req, res)=>{
+exports.updatePro = async(req, res)=>{
     const productId = req.params.id;
     const bodyObj = {
         name : req.body.name,
@@ -29,11 +29,19 @@ exports.updatePro = (req, res)=>{
         category : req.body.category
     };
     try{
-        const product = await Product.findOne({_id : productId});
-        const products = await Product.updateOne(bodyObj);
-        res.status(201).send(products);
+        const product = await Product.findOne({_id : productId}, {$set : bodyObj});
+        if(!product){
+            res.status(404).send({
+                message : "Product id does not exits  !"
+            });
+            return;
+        }
+        
+        res.status(200).send({
+            message : "Product updated "
+        });
     }catch(err){
-        console.log(err);
+        console.log(err.message);
         res.status(500).send({
             message : "Internal error  !"
         });
