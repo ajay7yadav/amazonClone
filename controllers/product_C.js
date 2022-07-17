@@ -29,7 +29,7 @@ exports.updatePro = async(req, res)=>{
         category : req.body.category
     };
     try{
-        const product = await Product.findOne({_id : productId}, {$set : bodyObj});
+        const product = await Product.updateOne({_id : productId}, {$set : bodyObj});
         if(!product){
             res.status(404).send({
                 message : "Product id does not exits  !"
